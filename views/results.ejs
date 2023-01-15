@@ -1,12 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    results
-</body>
+  </head>
+  <body>
+    Total: <%= resultsObject.total %> <br />
+    Count: <%= resultsObject.count %> <br /><br />
+
+    <%= resultsJson %> <br />
+
+
+
+    <div>
+        <ul style="display: inline-block;">
+          <% resultsObject.products.map((product)=>{ %>
+          <li>ID: <%= product.id %></li>
+          <% }) %>
+        </ul>
+        <ul style="display: inline-block;">
+          <% resultsObject.products.map((product)=>{ %>
+          <li>Price: <%= product.price %></li>
+          <% }) %>
+        </ul>
+        <ul style="display: inline-block;">
+            <% resultsObject.products.map((product)=>{ %>
+            <li>Count check: <%= resultsObject.products.indexOf(product) + 1 %></li>
+            <% }) %>
+          </ul>
+        
+
+    </div>
+  </body>
 </html>
+
+

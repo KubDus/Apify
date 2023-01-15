@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
-import Items from "./items.js";
+import apifyReturn from "./apifyReturn.js";
+import scrapeData from "./scrapeData.js";
 
 const app = express();
 app.set("view engine", "ejs");
@@ -12,10 +13,20 @@ app.get("/", function (req, res) {
   res.render("home");
 });
 
+app.get("/api.ecommerce.com/products", function (req, res) {
+  let minPrice = req.query.min;
+  let maxPrice = req.query.max;
+
+  scrapeStart.startScraping(minPrice, maxPrice);
+
+  res.redirect("/");
+});
+
 app.post("/results", function (req, res) {
-  console.log(req.body.max);
-  console.log(Items)
-  res.render("results");
+  const resultsJson = apifyReturn.getItemsInRange(req.body.min, req.body.max);
+  const resultsObject = JSON.parse(resultsJson);
+
+  res.render("results", { resultsObject: resultsObject, resultsJson: resultsJson });
 });
 
 app.listen(3000, function () {
