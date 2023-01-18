@@ -7,7 +7,7 @@ class ApifyReturn {
     let allItemsInRange = [];
     let allItemsInRangeCount;
     let resultJson;
-    let resultObj;
+    let resultObj; 
 
     allItemsInRange = Items.filter(function (item) {
       return item.price >= min && item.price <= max;
