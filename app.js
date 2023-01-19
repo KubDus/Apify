@@ -30,7 +30,7 @@ app.post("/request", async function (req, res) {
   const maxPrice = req.body.max;
 
   let products = await scrapingProcess(minPrice, maxPrice, urlDefault);
-  // console.log(products);
+
 });
 
 app.post("/results", function (req, res) {

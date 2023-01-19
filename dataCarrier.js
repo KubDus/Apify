@@ -2,8 +2,8 @@ class DataCarrier {
   constructor(minPrice, maxPrice, urlDefault) {
     this.products = [];
 
-    this.minPrice = minPrice;
-    this.maxPrice = maxPrice;
+    this.minPrice = parseInt(minPrice) ;
+    this.maxPrice = parseInt(maxPrice)
 
     this.totalAmountOfResults;
     this.numberOfResultsPerCall;
@@ -21,6 +21,7 @@ class DataCarrier {
 
     this.currentMin = this.minPrice;
     this.currentMax = this.maxPrice;
+    this.currentPriceRange = this.currentMax - this.currentMin
     this.latestResponse;
     this.currentResultsInRange;
   }

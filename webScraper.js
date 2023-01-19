@@ -49,12 +49,14 @@ class WebScraper {
   async makeFirstApiCall(dataCarrier) {
     dataCarrier.latestResponse = (await axios.get(dataCarrier.url)).data;
     dataCarrier.totalAmountOfResults = dataCarrier.latestResponse.total;
-    dataCarrier.numberOfResultsPerCall = dataCarrier.latestResponse.count;
+    dataCarrier.maxItemsPerCall = dataCarrier.latestResponse.count;
 
     if (dataCarrier.latestResponse.total === dataCarrier.latestResponse.count) {
       dataCarrier.isFinished = true;
       dataCarrier.products = dataCarrier.latestResponse.products;
     }
+
+    // console.log(dataCarrier);
 
     return dataCarrier;
   }
@@ -70,30 +72,74 @@ class WebScraper {
   async makeApiCall(dataCarrier) {
     dataCarrier.latestResponse = (await axios.get(dataCarrier.url)).data;
 
-    if (dataCarrier.latestResponse.total < dataCarrier.numberOfResultsPerCall) {
-      // we happy
-      if (dataCarrier.latestResponse.total / dataCarrier.numberOfResultsPerCall < 0.8) {
-        // increase range
+    console.log("-------------------------------------- new cycle" + dataCarrier.callsCount + " --------------------------------------------------");
+
+    console.log("total " + dataCarrier.latestResponse.total);
+
+    // ratio of returned products to max products per call
+
+    dataCarrier.index = (dataCarrier.maxItemsPerCall / dataCarrier.latestResponse.total) * 0.7;
+
+    // latest response total amount is less than max results per call - we happy
+    if (dataCarrier.latestResponse.total < dataCarrier.maxItemsPerCall) {
+      console.log("in happy");
+
+      // if latest response total is less than 50 % of max results per call, then increase range
+      if (dataCarrier.latestResponse.total / dataCarrier.maxItemsPerCall < 0.8) {
+        console.log("in <80%");
+
+        dataCarrier.currentMin = dataCarrier.currentMax + 1;
+
+        dataCarrier.currentMax += Math.floor(dataCarrier.currentPriceRange * dataCarrier.index);
+
+        // if latest response total was in between 80 % and 100 % of max results per call, we happy
+      } else {
+        console.log("in 80-100");
+        dataCarrier.currentMin = dataCarrier.currentMax + 1;
+        dataCarrier.currentMax += dataCarrier.currentPriceRange;
       }
-      console.log("in if");
-      dataCarrier.products.push(dataCarrier.latestResponse.products);
-      dataCarrier.currentMin = dataCarrier.currentMax;
-      dataCarrier.currentMax += 50;
-      // dodej produkty
-      // pokud pocet dost velky, nastav finished true
-      // posun min a max nahoru
+
+      // push products from latest response
+      dataCarrier.products.push(...dataCarrier.latestResponse.products);
+
+      // move range bottom to the next level
+      // dataCarrier.currentMin = dataCarrier.currentMax + 1;
+      // dataCarrier.currentMax = Math.floor(dataCarrier.currentMax * dataCarrier.index);
+
+      // there are more products in the range than we got - we not happy
     } else {
-      // posun max dolu
-      dataCarrier.index = (dataCarrier.numberOfResultsPerCall / dataCarrier.latestResponse.total) * 0.9;
-      dataCarrier.maxPrice = Math.floor(dataCarrier.maxPrice * dataCarrier.index);
-      console.log(dataCarrier.maxPrice);
+      // move max down
+
+      dataCarrier.currentMax = dataCarrier.currentMin + Math.floor(dataCarrier.currentPriceRange * dataCarrier.index);
     }
 
     dataCarrier.callsCount++;
-    if (dataCarrier.callsCount > dataCarrier.totalAmountOfResults) {
+    if (dataCarrier.currentMax > dataCarrier.maxPrice || dataCarrier.callsCount > dataCarrier.totalAmountOfResults) {
       dataCarrier.finishedCalling = true;
     }
-    console.log(dataCarrier.callsCount);
+
+    if (dataCarrier.callsCount > 15) {
+      dataCarrier.finishedCalling = true;
+    }
+
+    dataCarrier = await this.changeAttributesOfDataCarrier(dataCarrier);
+
+    return dataCarrier;
+  }
+
+  async changeAttributesOfDataCarrier(dataCarrier) {
+    dataCarrier.url = dataCarrier.urlDefault + "?min=" + dataCarrier.currentMin + "&max=" + dataCarrier.currentMax;
+    dataCarrier.currentPriceRange = dataCarrier.currentMax - dataCarrier.currentMin;
+
+    if (dataCarrier.currentMax > dataCarrier.maxPrice) {
+      dataCarrier.currentMax = dataCarrier.maxPrice;
+    }
+
+    console.log(dataCarrier.currentMin);
+    console.log(dataCarrier.currentMax);
+
+    console.log(dataCarrier.index);
+
     return dataCarrier;
   }
 }
