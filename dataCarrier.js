@@ -52,7 +52,7 @@ class DataCarrier {
     }
   }
 
-  // if we breached max items per call
+  // check if we breached max items per call
   async moveMaxPriceDown() {
     this.currentMax = this.currentMin + Math.floor(this.currentPriceRange * this.itemsRatio);
   }
