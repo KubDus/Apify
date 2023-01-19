@@ -4,9 +4,22 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Home</title>
   </head>
   <body>
+    <h1>Make call to backend app</h1>
+    <form action="/request" method="post">
+      <br />
+      <label for="min">Min:</label>
+      <input type="number" name="min" value="0" /> <br />
+      <br />
+      <label for="max">Max:</label>
+      <input type="number" name="max" value="100000" /> <br />
+      <br />
+      <button type="submit">Send request only</button>
+    </form>
+
+    <h1>Make single call and see results (for testing)</h1>
     <form action="/results" method="post">
       <label for="min">Min:</label>
       <input type="number" name="min" /> <br />
@@ -14,18 +27,7 @@
       <label for="max">Max:</label>
       <input type="number" name="max" /> <br />
       <br />
-      <button type="submit">See results</button> <br />
-    </form>
-
-    <form action="/request" method="post">
-      <br />
-      <label for="min">Min:</label>
-      <input type="number" name="min" value="5" /> <br />
-      <br />
-      <label for="max">Max:</label>
-      <input type="number" name="max" value="500" /> <br />
-      <br />
-      <button type="submit">Send request only</button>
+      <button type="submit">Make call</button> <br />
     </form>
   </body>
 </html>

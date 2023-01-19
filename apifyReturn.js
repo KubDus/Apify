@@ -1,5 +1,5 @@
 import Items from "./items.js";
-const maxItems = 50;
+const maxItems = 1000;
 
 class ApifyReturn {
   getItemsInRange(min, max) {

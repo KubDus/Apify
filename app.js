@@ -1,7 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
 import apifyReturn from "./apifyReturn.js";
-import { WebScraper } from "./webScraper.js";
 import { scrapingProcess } from "./scrapingProcess.js";
 
 const app = express();
@@ -29,8 +28,9 @@ app.post("/request", async function (req, res) {
   const minPrice = req.body.min;
   const maxPrice = req.body.max;
 
-  let products = await scrapingProcess(minPrice, maxPrice, urlDefault);
+  let dataCarrier = await scrapingProcess(minPrice, maxPrice, urlDefault);
 
+  res.render("evaluation", { dataCarrier: dataCarrier });
 });
 
 app.post("/results", function (req, res) {

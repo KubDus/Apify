@@ -11,8 +11,6 @@ export async function scrapingProcess(minPrice, maxPrice, urlDefault) {
     });
   }
 
-  let itemsAmount = dataCarrier.products.length;
-  console.log("this is number of items " + itemsAmount);
-
-  return dataCarrier.products;
+  return dataCarrier;
 }
+  
