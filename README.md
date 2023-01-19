@@ -29,9 +29,9 @@ Start the server by "npm start" or "nodemon app.js" and go to http://localhost:3
 
 ### Files:
 
-apifyReturn.js - simulates endpoint; on top you can change maxItems, which are send back in one call (program itself will adapt to it)
+apifyReturn.js - simulates endpoint; on top you can change constant maxItems, which are send back in one call (program itself will adapt to it)
 
-items.js - array of products; id + random price
+items.js - array of products => id + random price
 
 app.js - runs server, handles endpoints
 
