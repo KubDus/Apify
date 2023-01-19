@@ -20,7 +20,7 @@
 
 8. Is there some expectations your code relies on? If yes, write it in the comments. Could the code be written in a way that does not depend on these expectations?
 
-### 
+###  Short description
 
 To be able to test everything, I first created my own server to simulate call to the endpoint.
 I made a list of 60 000 products, all with random price between 0 and 100 000.
