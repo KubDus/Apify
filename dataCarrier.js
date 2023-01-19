@@ -1,5 +1,6 @@
 class DataCarrier {
   constructor(minPrice, maxPrice, urlDefault) {
+    
     // those 2 can be changed to try to optimize necessary amount of calls
     this.receivedItemsIndex = 0.8; // we aim to receive minimum 80% of possible items per call
     this.ratioIndex = 0.9; // decrease ItemsRatio not to breach maxItemsPerCall too often
