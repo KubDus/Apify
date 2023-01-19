@@ -30,12 +30,15 @@ Start the server by "npm start" or "nodemon app.js" and go to http://localhost:3
 ### Files:
 
 apifyReturn.js - simulates endpoint; on top you can change maxItems, which are send back in one call (program itself will adapt to it)
+
 items.js - array of products; id + random price
 
 app.js - runs server, handles endpoints
 
 scrapingProcess.js - this runs after user sends request with price range, repeats calls to API
+
 webScraper.js - main flow logic of changing price range for next calls
+
 dataCarrier.js - object carrying all the data and methods
     - two constants on the top can be changed to try to optimize necessary amount of calls to get all the data
 
