@@ -16,7 +16,7 @@ class DataCarrier {
     this.urlDefault = urlDefault;
     this.url = this.urlDefault + "?min=" + this.minPrice + "&max=" + this.maxPrice;
 
-    this.callsCount = 0; // calls counter
+    this.callsCount = -1; // calls counter
     this.finishedCalling = false; // finished
 
     this.currentMin = this.minPrice;
@@ -30,7 +30,7 @@ class DataCarrier {
   async firstDataSetup() {
     this.totalAmountOfResults = this.latestResponse.total;
     this.maxItemsPerCall = this.latestResponse.count;
-    this.callsCount = 1;
+    this.callsCount = 0;
   }
 
   // checks if the items per call limit was breached

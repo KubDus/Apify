@@ -4,7 +4,7 @@ class WebScraper {
   async makeApiCall(dataCarrier) {
     dataCarrier.latestResponse = (await axios.get(dataCarrier.url)).data;
 
-    if (dataCarrier.callsCount === 0) {
+    if (dataCarrier.callsCount === -1) {
       await dataCarrier.firstDataSetup();
     }
 

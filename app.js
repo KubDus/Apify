@@ -30,7 +30,7 @@ app.post("/request", async function (req, res) {
 
   let dataCarrier = await scrapingProcess(minPrice, maxPrice, urlDefault);
 
-  res.render("evaluation", { dataCarrier: dataCarrier });
+  res.render("evaluation", { productsFound: dataCarrier.products.length, productsExpected: dataCarrier.totalAmountOfResults, callsCount: dataCarrier.callsCount });
 });
 
 app.post("/results", function (req, res) {
